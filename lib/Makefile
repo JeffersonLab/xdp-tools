@@ -7,7 +7,7 @@ include defines.mk
 SUBDIRS=util testing
 .PHONY: $(SUBDIRS)
 
-all: $(SUBDIRS) libxdp
+all: $(SUBDIRS) libxdp libbpf
 
 util: libxdp
 	@echo; echo "  $@"; $(MAKE) -C $@
@@ -25,7 +25,7 @@ clean: libbpf_clean
 	do $(MAKE) -C $$i clean; done
 
 .PHONY: install
-install: libxdp_install
+install: libxdp_install libbpf_install
 	$(MAKE) -C testing install
 
 .PHONY: libxdp_install
@@ -33,7 +33,15 @@ libxdp_install: libxdp
 	install -m 0755 -d $(DESTDIR)$(HDRDIR)
 	$(MAKE) -C libxdp install
 
+.PHONY: libbpf_install
+libbpf_install: libbpf
+	install -m 0755 -d $(DESTDIR)$(HDRDIR)
+	$(MAKE) -C libbpf/src install
+
+.PHONY: libbpf
 libbpf: $(OBJECT_LIBBPF)
+	@echo; echo "  $@"; $(MAKE) -C $@/src
+
 
 # Handle libbpf as git submodule
 ifeq ($(SYSTEM_LIBBPF),n)

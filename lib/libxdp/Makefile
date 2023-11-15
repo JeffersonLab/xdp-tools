@@ -49,10 +49,12 @@ clean:
 
 install: all
 	$(Q)install -d -m 0755 $(DESTDIR)$(HDRDIR)
+	$(Q)install -d -m 0755 $(DESTDIR)$(HDRDIR)/xdp
 	$(Q)install -d -m 0755 $(DESTDIR)$(LIBDIR)
 	$(Q)install -d -m 0755 $(DESTDIR)$(LIBDIR)/pkgconfig
 	$(Q)install -d -m 0755 $(DESTDIR)$(BPF_OBJECT_DIR)
 	$(Q)install -m 0644 $(LIB_HEADERS) $(DESTDIR)$(HDRDIR)/
+	$(Q)install -m 0644 $(LIB_HEADERS) $(DESTDIR)$(HDRDIR)/xdp
 	$(Q)install -m 0644 $(PC_FILE) $(DESTDIR)$(LIBDIR)/pkgconfig/
 	$(Q)cp -fpR $(SHARED_LIBS) $(STATIC_LIBS) $(DESTDIR)$(LIBDIR)
 	$(Q)install -m 0644 $(XDP_OBJS) $(DESTDIR)$(BPF_OBJECT_DIR)
